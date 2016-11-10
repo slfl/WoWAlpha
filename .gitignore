@@ -15,6 +15,7 @@
 
 .vs/*
 
-*/bin/
+*/bin/*
 */obj/
 */_Research/
+*/packages/*
