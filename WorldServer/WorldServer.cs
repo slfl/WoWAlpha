@@ -12,8 +12,9 @@ namespace WorldServer
     {
         static void Main()
         {
-            Log.Message(LogType.INIT, "                 ALPHA WOW                 ");
-            Log.Message(LogType.INIT, "             REALM/PROXY/WORLD             ");
+            Log.Message(LogType.INIT, "╔═╗┬  ┌─┐┌┬┐┌─┐╔═╗┌─┐┬─┐┌─┐");
+            Log.Message(LogType.INIT, "╠╣ │  ├─┤│││├┤ ║  │ │├┬┘├┤ ");
+            Log.Message(LogType.INIT, "╚  ┴─┘┴ ┴┴ ┴└─┘╚═╝└─┘┴└─└─┘");
             Log.Message();
 
             Log.Message(LogType.NORMAL, "Starting Alpha WoW Server...");
