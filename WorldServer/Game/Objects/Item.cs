@@ -25,7 +25,7 @@ namespace WorldServer.Game.Objects
         public uint StackCount = 1;
         public ItemTemplate Template;
         public bool IsContainer { get { return Type == InventoryTypes.BAG; } }
-        public bool IsSoulbound { get; private set; } = false;
+        public bool IsSoulbound { get; private set; }
         public bool IsEquipmentPos { get { return CurrentSlot < (uint)InventorySlots.SLOT_BAG1; } }
         public uint[] SpellCharges = new uint[5];
         public uint EquipSlot = 0;

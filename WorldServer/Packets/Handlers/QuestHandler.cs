@@ -45,7 +45,7 @@ namespace WorldServer.Packets.Handlers
             obj = Database.Creatures.TryGet<WorldObject>(guid) ??
                   Database.Items.TryGet<WorldObject>(guid); //Try to find the object
 
-            if (obj == null || quest == null || obj?.HasQuest(questid) == false) //Check the quest/giver exists
+            if (obj == null || quest == null || obj.HasQuest(questid) == false) //Check the quest/giver exists
                 return;
 
             if (!manager.Character.CheckQuestRequirements(quest, false) || !manager.Character.CheckQuestLevel(quest, false))
@@ -71,7 +71,7 @@ namespace WorldServer.Packets.Handlers
             obj = Database.Creatures.TryGet<WorldObject>(guid) ??
                   Database.Items.TryGet<WorldObject>(guid); //Try to find the object
 
-            if (obj == null || quest == null || obj?.HasQuest(questid) == false) //Check the quest/giver exists
+            if (obj == null || quest == null || obj.HasQuest(questid) == false) //Check the quest/giver exists
                 return;
             if (obj.IsTypeOf(ObjectTypes.TYPE_UNIT) && (((Creature)obj).IsEnemyTo(manager.Character)))
                 return;

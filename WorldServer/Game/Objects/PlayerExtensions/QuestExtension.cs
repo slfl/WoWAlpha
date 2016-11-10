@@ -87,7 +87,7 @@ namespace WorldServer.Game.Objects.PlayerExtensions.Quests
                 if (p.Quests.ContainsKey(qt.QuestId))
                     quest = p.Quests[qt.QuestId];
 
-                if ((status == QuestStatuses.QUEST_STATUS_COMPLETE && quest?.Rewarded != true) || qt.IsAutoComplete)
+                if ((status == QuestStatuses.QUEST_STATUS_COMPLETE && quest.Rewarded != true) || qt.IsAutoComplete)
                     return (uint)QuestGiverStatuses.QUEST_GIVER_REWARD; //Turn in is priority
                 else if (status == QuestStatuses.QUEST_STATUS_INCOMPLETE)
                     dialogStatusNew = QuestGiverStatuses.QUEST_GIVER_NONE;
@@ -130,7 +130,7 @@ namespace WorldServer.Game.Objects.PlayerExtensions.Quests
         public static QuestStatuses GetQuestStatus(this Player p, uint questid)
         {
             if (p.Quests.ContainsKey(questid))
-                return p.Quests[questid]?.Status ?? QuestStatuses.QUEST_STATUS_NONE;
+                return p.Quests[questid].Status;
 
             return QuestStatuses.QUEST_STATUS_NONE;
         }
@@ -162,7 +162,7 @@ namespace WorldServer.Game.Objects.PlayerExtensions.Quests
 
                 status = p.GetQuestStatus(qt.QuestId);
 
-                if (status == QuestStatuses.QUEST_STATUS_COMPLETE && quest?.Rewarded == false)
+                if (status == QuestStatuses.QUEST_STATUS_COMPLETE && quest.Rewarded == false)
                     menu.AddItem(qt, QuestStatuses.QUEST_STATUS_COMPLETE);
                 else if (status == QuestStatuses.QUEST_STATUS_INCOMPLETE) //Incomplete
                     menu.AddItem(qt, QuestStatuses.QUEST_STATUS_INCOMPLETE);
@@ -325,7 +325,7 @@ namespace WorldServer.Game.Objects.PlayerExtensions.Quests
             {
                 packet.WriteUInt32(quest.RewChoiceItemId[i]);
                 packet.WriteUInt32(quest.RewChoiceItemCount[i]);
-                packet.WriteUInt32(Database.ItemTemplates.TryGet(quest.RewChoiceItemId[i])?.DisplayID ?? 0);
+                packet.WriteUInt32(Database.ItemTemplates.TryGet(quest.RewChoiceItemId[i]).DisplayID);
             }
 
             packet.WriteUInt32((uint)quest.GetReqItemCount);
@@ -333,7 +333,7 @@ namespace WorldServer.Game.Objects.PlayerExtensions.Quests
             {
                 packet.WriteUInt32(quest.ReqItemId[i]);
                 packet.WriteUInt32(quest.ReqItemCount[i]);
-                packet.WriteUInt32(Database.ItemTemplates.TryGet(quest.ReqItemId[i])?.DisplayID ?? 0);
+                packet.WriteUInt32(Database.ItemTemplates.TryGet(quest.ReqItemId[i]).DisplayID);
             }
 
             packet.WriteUInt32(quest.RewOrReqMoney < 0 ? (uint)-quest.RewOrReqMoney : 0);
@@ -349,7 +349,7 @@ namespace WorldServer.Game.Objects.PlayerExtensions.Quests
                 completeable = false;
 
             if (p.Quests.ContainsKey(quest.QuestId))
-                if (p.Quests[quest.QuestId]?.Rewarded == true)
+                if (p.Quests[quest.QuestId].Rewarded == true)
                     completeable = false;
 
             PacketWriter packet = new PacketWriter(Opcodes.SMSG_QUESTGIVER_REQUEST_ITEMS);
@@ -367,7 +367,7 @@ namespace WorldServer.Game.Objects.PlayerExtensions.Quests
             {
                 packet.WriteUInt32(quest.ReqItemId[i]);
                 packet.WriteUInt32(quest.ReqItemCount[i]);
-                packet.WriteUInt32(Database.ItemTemplates.TryGet(quest.ReqItemId[i])?.DisplayID ?? 0);
+                packet.WriteUInt32(Database.ItemTemplates.TryGet(quest.ReqItemId[i]).DisplayID);
             }
 
             packet.WriteUInt32(2);
@@ -394,7 +394,7 @@ namespace WorldServer.Game.Objects.PlayerExtensions.Quests
             {
                 packet.WriteUInt32(quest.RewChoiceItemId[i]);
                 packet.WriteUInt32(quest.RewChoiceItemCount[i]);
-                packet.WriteUInt32(Database.ItemTemplates.TryGet(quest.RewChoiceItemId[i])?.DisplayID ?? 0);
+                packet.WriteUInt32(Database.ItemTemplates.TryGet(quest.RewChoiceItemId[i]).DisplayID);
             }
 
             //Reward items

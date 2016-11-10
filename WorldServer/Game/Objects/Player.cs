@@ -83,8 +83,8 @@ namespace WorldServer.Game.Objects
         public List<ulong> IgnoreList = new List<ulong>();        
 
         //Teleport
-        public bool TeleportSemaphore { get; private set; } = false;
-        public bool TeleportShortSemaphore { get; private set; } = false;
+        public bool TeleportSemaphore { get; private set; }
+        public bool TeleportShortSemaphore { get; private set; }
         private Quaternion TeleportLocation = null;
         private uint TeleportMap = 0;
         private long TeleportTime = 0;
@@ -529,13 +529,13 @@ namespace WorldServer.Game.Objects
                     break;
                 case 1:
                     Flag.RemoveFlag(ref this.UnitFlags, (uint)Common.Constants.UnitFlags.UNIT_FLAG_SHEATHE);
-                    SetVirtualItem(0, this.Inventory.Backpack.GetItem((byte)InventorySlots.SLOT_MAINHAND)?.Template);
-                    SetVirtualItem(1, this.Inventory.Backpack.GetItem((byte)InventorySlots.SLOT_OFFHAND)?.Template);
+                    SetVirtualItem(0, this.Inventory.Backpack.GetItem((byte)InventorySlots.SLOT_MAINHAND).Template);
+                    SetVirtualItem(1, this.Inventory.Backpack.GetItem((byte)InventorySlots.SLOT_OFFHAND).Template);
                     IsArmed = true;
                     break;
                 case 2:
                     Flag.RemoveFlag(ref this.UnitFlags, (uint)Common.Constants.UnitFlags.UNIT_FLAG_SHEATHE);
-                    SetVirtualItem(2, this.Inventory.Backpack.GetItem((byte)InventorySlots.SLOT_RANGED)?.Template);
+                    SetVirtualItem(2, this.Inventory.Backpack.GetItem((byte)InventorySlots.SLOT_RANGED).Template);
                     IsArmed = true;
                     break;
             }
@@ -834,7 +834,7 @@ namespace WorldServer.Game.Objects
         public Item GetItem(byte bag, byte slot)
         {
             uint bagslot = (uint)(bag == 255 ? 23 : bag);
-            return this.Inventory.GetBag(bagslot)?.GetItem(slot);
+            return this.Inventory.GetBag(bagslot).GetItem(slot);
         }
 
         public void SwapItem(byte srcbag, byte srcslot, byte dstbag, byte dstslot)
@@ -844,8 +844,8 @@ namespace WorldServer.Game.Objects
             bool srcIsBackpack = srcbagslot == (uint)InventorySlots.SLOT_INBACKPACK;
             bool dstIsBackpack = dstbagslot == (uint)InventorySlots.SLOT_INBACKPACK;
 
-            Item srcItem = this.Inventory.GetBag(srcbagslot)?.GetItem(srcslot);
-            Item dstItem = this.Inventory.GetBag(dstbagslot)?.GetItem(dstslot);
+            Item srcItem = this.Inventory.GetBag(srcbagslot).GetItem(srcslot);
+            Item dstItem = this.Inventory.GetBag(dstbagslot).GetItem(dstslot);
             if (srcItem == null)
                 return;
 
@@ -923,14 +923,14 @@ namespace WorldServer.Game.Objects
             }
 
             //Stack Items : return
-            if (srcItem.Entry == dstItem?.Entry && dstItem.Template.MaxStackCount > dstItem.StackCount)
+            if (srcItem.Entry == dstItem.Entry && dstItem.Template.MaxStackCount > dstItem.StackCount)
             {
                 uint diff = dstItem.Template.MaxStackCount - dstItem.StackCount;
                 if (diff >= srcItem.StackCount)
                 {
                     //Destroy src stack
                     dstItem.StackCount += srcItem.StackCount;
-                    this.Inventory.GetBag(srcbagslot)?.RemoveItemInSlot(srcslot);
+                    this.Inventory.GetBag(srcbagslot).RemoveItemInSlot(srcslot);
                 }
                 else
                 {
@@ -946,8 +946,8 @@ namespace WorldServer.Game.Objects
             //Do the actual transfer here
 
             //Remove items
-            this.Inventory.GetBag(srcbagslot)?.RemoveItemInSlot(srcslot);
-            this.Inventory.GetBag(dstbagslot)?.RemoveItemInSlot(dstslot);
+            this.Inventory.GetBag(srcbagslot).RemoveItemInSlot(srcslot);
+            this.Inventory.GetBag(dstbagslot).RemoveItemInSlot(dstslot);
 
             if (srcItem.IsContainer && InventoryManager.IsBagPos(srcbagslot, srcslot) && srcIsBackpack)
             {
@@ -979,8 +979,8 @@ namespace WorldServer.Game.Objects
                 this.Inventory.AddBag(srcslot, (Container)dstItem);
 
             //Add items
-            this.Inventory.GetBag(dstbagslot)?.AddItem(srcItem, dstslot);
-            this.Inventory.GetBag(srcbagslot)?.AddItem(dstItem, srcslot);
+            this.Inventory.GetBag(dstbagslot).AddItem(srcItem, dstslot);
+            this.Inventory.GetBag(srcbagslot).AddItem(dstItem, srcslot);
 
             if ((srcslot == (byte)InventorySlots.SLOT_MAINHAND && srcIsBackpack) ||
                 (dstslot == (byte)InventorySlots.SLOT_MAINHAND && dstIsBackpack))
@@ -994,8 +994,8 @@ namespace WorldServer.Game.Objects
             uint srcbagslot = (uint)(srcbag == 255 ? 23 : srcbag);
             uint dstbagslot = (uint)(dstbag == 255 ? 23 : dstbag);
 
-            Item srcitem = this.Inventory.GetBag(srcbagslot)?.GetItem(srcslot);
-            Item dstitem = this.Inventory.GetBag(dstbagslot)?.GetItem(dstslot);
+            Item srcitem = this.Inventory.GetBag(srcbagslot).GetItem(srcslot);
+            Item dstitem = this.Inventory.GetBag(dstbagslot).GetItem(dstslot);
             if (srcitem == null)
             {
                 SendEquipError(InventoryError.EQUIP_ERR_ITEM_NOT_FOUND, srcitem, null);
@@ -1041,7 +1041,7 @@ namespace WorldServer.Game.Objects
                 }
                 else
                 {
-                    if (this.Inventory.GetBag(dstbagslot)?.AddItem(clone) == true)
+                    if (this.Inventory.GetBag(dstbagslot).AddItem(clone) == true)
                         srcitem.StackCount -= count;
                 }
 
@@ -1061,10 +1061,10 @@ namespace WorldServer.Game.Objects
             if (error != InventoryError.EQUIP_ERR_OK)
             {
                 if (error == InventoryError.EQUIP_ERR_CANT_EQUIP_LEVEL_I)
-                    pw.WriteUInt32(item1?.Template.LevelReq ?? 0);
+                    pw.WriteUInt32(item1.Template.LevelReq);
 
-                pw.WriteUInt64(item1?.Guid ?? this.Guid);
-                pw.WriteUInt64(item2?.Guid ?? this.Guid);
+                pw.WriteUInt64(item1.Guid);
+                pw.WriteUInt64(item2.Guid);
                 pw.WriteUInt8(0);
             }
 
@@ -1074,7 +1074,7 @@ namespace WorldServer.Game.Objects
         public void SendSellError(SellResults error, Creature vendor, ulong item)
         {
             PacketWriter pw = new PacketWriter(Opcodes.SMSG_SELL_ITEM);
-            pw.WriteUInt64(vendor?.Guid ?? this.Guid);
+            pw.WriteUInt64(vendor.Guid );
             pw.WriteUInt64(item);
             pw.WriteUInt8((byte)error);
             this.Client.Send(pw);
@@ -1083,7 +1083,7 @@ namespace WorldServer.Game.Objects
         public void SendBuyError(BuyResults error, Creature vendor, uint entry)
         {
             PacketWriter pw = new PacketWriter(Opcodes.SMSG_BUY_FAILED);
-            pw.WriteUInt64(vendor?.Guid ?? this.Guid);
+            pw.WriteUInt64(vendor.Guid);
             pw.WriteUInt32(entry);
             pw.WriteUInt8((byte)error);
             this.Client.Send(pw);
@@ -1391,7 +1391,7 @@ namespace WorldServer.Game.Objects
                 return;
             }
 
-            if (Database.Creatures.TryGet(this.CombatTarget)?.IsDead == true)
+            if (Database.Creatures.TryGet(this.CombatTarget).IsDead == true)
             {
                 LeaveCombat();
                 return;

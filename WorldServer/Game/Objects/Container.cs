@@ -92,7 +92,7 @@ namespace WorldServer.Game.Objects
 
         public bool RemoveItem(uint entry)
         {
-            ulong key = this.Items.Values.FirstOrDefault(x => x.Entry == entry)?.Guid ?? 0;
+            ulong key = this.Items.Values.FirstOrDefault(x => x.Entry == entry).Guid;
             if (this.Items.ContainsKey(key))
             {
                 this.Items.Remove(key);

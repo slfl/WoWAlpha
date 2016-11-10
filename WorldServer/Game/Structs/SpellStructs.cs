@@ -352,7 +352,7 @@ namespace WorldServer.Game.Structs
         public int GetValue(Unit target, int index)
         {
             Player p = (Caster.IsTypeOf(ObjectTypes.TYPE_PLAYER) ? (Player)Caster : null);
-            uint combopoints = p?.ComboPoints ?? 0;
+            uint combopoints = p.ComboPoints;
 
             byte level = Caster.Level;
             if (level > Spell.maxLevel && Spell.maxLevel > 0)
@@ -535,10 +535,10 @@ namespace WorldServer.Game.Structs
             uint CatergoryRecovery = Spell.CategoryRecoveryTime;
 
             if (Spell.Id == 2764) //Throw spell uses the equipped ranged item's attackspeed
-                Recovery = p.Inventory.Backpack.GetItem((byte)InventorySlots.SLOT_RANGED)?.BaseAttackTime ?? Recovery;
+                Recovery = p.Inventory.Backpack.GetItem((byte)InventorySlots.SLOT_RANGED).BaseAttackTime;
 
             if (Spell.Id == 5019) //Shoot spell uses the equipped wand's attackspeed
-                Recovery = p.Inventory.Backpack.GetItem((byte)InventorySlots.SLOT_RANGED)?.Template.WeaponSpeed ?? Recovery;
+                Recovery = p.Inventory.Backpack.GetItem((byte)InventorySlots.SLOT_RANGED).Template.WeaponSpeed;
 
             if (CatergoryRecovery == 0 && Recovery == 0) //No cooldown
                 return;

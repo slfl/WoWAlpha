@@ -57,7 +57,7 @@ namespace WorldServer.Game.Commands
 
             if (!DBC.SkillLine.ContainsKey(skillid) ||
                  player == null ||
-                 player?.Skills.ContainsKey(skillid) == true)
+                 player.Skills.ContainsKey(skillid) == true)
                 return;
 
             if (player.AddSkill(skillid)) //Success

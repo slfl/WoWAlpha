@@ -26,7 +26,7 @@ namespace WorldServer.Packets.Handlers
             //if (self.IsTrading)
             //    self.TradeInfo.Clear();
 
-            if (other == null || other?.IsDead == true || other?.LoggedIn == false)
+            if (other == null || other.IsDead == true || other.LoggedIn == false)
             {
                 self.SendTradeStatus(TradeStatuses.TRADE_STATUS_PLAYER_NOT_FOUND);
                 return;
@@ -146,14 +146,14 @@ namespace WorldServer.Packets.Handlers
 
             for (byte i = 0; i < TradeData.TRADE_SLOT_COUNT; i++)
             {
-                if (thistrade.GetItem(i)?.IsSoulbound == true)
+                if (thistrade.GetItem(i).IsSoulbound == true)
                 {
                     player.SendTradeStatus(TradeStatuses.TRADE_STATUS_CANCELLED);
                     trader.SendTradeStatus(TradeStatuses.TRADE_STATUS_CANCELLED);
                     return;
                 }
 
-                if (othertrade.GetItem(i)?.IsSoulbound == true)
+                if (othertrade.GetItem(i).IsSoulbound == true)
                 {
                     player.SendTradeStatus(TradeStatuses.TRADE_STATUS_CANCELLED);
                     trader.SendTradeStatus(TradeStatuses.TRADE_STATUS_CANCELLED);

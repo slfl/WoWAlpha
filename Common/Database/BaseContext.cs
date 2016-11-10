@@ -277,7 +277,7 @@ namespace Common.Database
         
         private string GetTableName<T>()
         {
-            string tableName = typeof(T).GetCustomAttribute<TableAttribute>()?.Name;
+            string tableName = typeof(T).GetCustomAttribute<TableAttribute>().Name;
             if (!string.IsNullOrWhiteSpace(tableName))
                 return tableName;
 
@@ -314,16 +314,19 @@ namespace Common.Database
 
         private class ColumnInfo
         {
-            public List<string> Columns { get; private set; } = new List<string>();
-            public bool IsArray { get; private set; } = false;
+            public List<string> Columns { get; private set; }
+            public bool IsArray { get; private set; }
 
             public ColumnInfo(string column)
             {
+                this.Columns = new List<string>();
                 this.Columns.Add(column);
+                this.IsArray = false;
             }
 
             public ColumnInfo(string[] columns)
             {
+                this.Columns = new List<string>();
                 this.Columns.AddRange(columns);
                 this.IsArray = true;
             }

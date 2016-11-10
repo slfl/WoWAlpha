@@ -1,12 +1,9 @@
 ﻿using Common.Database;
 using Common.Helpers.Extensions;
 using Common.Network.Packets;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using WorldServer.Storage;
-using static WorldServer.Game.Objects.UnitExtensions.TalentExtension;
 
 namespace WorldServer.Game.Structs
 {
@@ -123,8 +120,8 @@ namespace WorldServer.Game.Structs
                 this.CombatReach = cmi.CombatReach;
             }
             
-            this.VendorItems = Database.VendorItems.TryGet(this.Entry)?.ToList(); //Shallow copy
-            this.VendorSpells = Database.VendorSpells.TryGet(this.Entry)?.ToDictionary(x => x.SpellId, y => y);
+            this.VendorItems = Database.VendorItems.TryGet(this.Entry).ToList(); //Shallow copy
+            this.VendorSpells = Database.VendorSpells.TryGet(this.Entry).ToDictionary(x => x.SpellId, y => y);
         }
     }
 }

@@ -135,7 +135,7 @@ namespace WorldServer.Game.Managers
 
             item.Player = player.Guid;
             item.Bag = (uint)bag;
-            if (GetBag((uint)bag)?.AddItem(item, slot) == true)
+            if (GetBag((uint)bag).AddItem(item, slot) == true)
             {
                 this.UpdateSurrounding(item);
                 player.QueryItemCheck(item.Entry);

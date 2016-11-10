@@ -219,7 +219,7 @@ namespace WorldServer.Game.Objects
                 }
                 else
                 {
-                    int casttime = spell.CastTime?.m_base ?? 0;
+                    int casttime = spell.CastTime.m_base;
                     if (casttime < 1500)
                         casttime = 1500;
                     else if (casttime > 3500)

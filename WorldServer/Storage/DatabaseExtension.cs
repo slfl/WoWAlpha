@@ -12,7 +12,7 @@ namespace WorldServer.Storage
         public static Item CreateItemOrContainer(this DbSet<uint, ItemTemplate> ItemTemplates, uint Key)
         {
             ItemTemplate template = ItemTemplates.TryGet(Key);
-            return (template?.InvType == (uint)InventoryTypes.BAG ? new Container(Key) : new Item(Key));
+            return (template.InvType == (uint)InventoryTypes.BAG ? new Container(Key) : new Item(Key));
         }
 
         public static Account GetByName(this DbSet<uint, Account> Accounts, string name)

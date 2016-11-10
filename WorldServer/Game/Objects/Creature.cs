@@ -340,7 +340,7 @@ namespace WorldServer.Game.Objects
             this.Money = (uint)this.Template.Gold.GetRandom();
             this.Loot.Clear();
             HashSet<LootItem> loot = new HashSet<LootItem>();
-            Dictionary<int, List<LootItem>> lootgroups = Database.CreatureLoot.TryGet(this.Entry)?
+            Dictionary<int, List<LootItem>> lootgroups = Database.CreatureLoot.TryGet(this.Entry)
                                                          .GroupBy(x => x.GroupId).ToDictionary(gr => gr.Key, gr => gr.ToList());
 
             if (lootgroups.Count == 0)
@@ -423,7 +423,7 @@ namespace WorldServer.Game.Objects
 
         public PacketWriter ListInventory(Player p)
         {
-            byte itemcount = (byte)(Template.VendorItems?.Count() ?? 0);
+            byte itemcount = (byte)(Template.VendorItems.Count());
 
             PacketWriter pw = new PacketWriter(Opcodes.SMSG_LIST_INVENTORY);
             pw.WriteUInt64(Guid);

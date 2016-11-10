@@ -14,7 +14,7 @@ namespace WorldServer.Packets.Handlers
             string playername = packet.ReadString();
             Player player = Database.Players.TryGetName(playername);
             Group myGroup = manager.Character.Group;
-            Group theirGroup = player?.Group;
+            Group theirGroup = player.Group;
 
             if (player == null)
             {

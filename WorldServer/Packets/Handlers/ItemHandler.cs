@@ -29,14 +29,14 @@ namespace WorldServer.Packets.Handlers
 
             uint bagslot = (uint)InventorySlots.SLOT_INBACKPACK;
 
-            Item item = manager.Character.Inventory.GetBag(bagslot)?.GetItem(sourceslot);
+            Item item = manager.Character.Inventory.GetBag(bagslot).GetItem(sourceslot);
             if (item == null)
                 return;
 
             if (Database.Items.TryRemove(item.Guid))
             {
                 manager.Character.CheckQuestItemRemove(item.Entry, count);
-                manager.Character.Inventory.GetBag(bagslot)?.RemoveItemInSlot(sourceslot);
+                manager.Character.Inventory.GetBag(bagslot).RemoveItemInSlot(sourceslot);
 
                 PacketWriter writer = new PacketWriter(Opcodes.CMSG_DESTROYITEM);
                 writer.WriteUInt64(item.Guid); //Item GUID
@@ -70,7 +70,7 @@ namespace WorldServer.Packets.Handlers
             byte dstslot = 0;
 
             byte srcbagslot = (byte)(srcbag == 255 ? 23 : srcbag);
-            Item srcItem = manager.Character.Inventory.GetBag(srcbagslot)?.GetItem(srcslot);
+            Item srcItem = manager.Character.Inventory.GetBag(srcbagslot).GetItem(srcslot);
             if (srcItem == null) //No item to move - cheat?
                 return;
 
@@ -87,7 +87,7 @@ namespace WorldServer.Packets.Handlers
             uint srcbagslot = (uint)(srcbag == 255 ? 23 : srcbag);
             uint dstbagslot = (uint)(dstbag == 255 ? 23 : dstbag);
 
-            Item item = manager.Character.Inventory.GetBag(srcbagslot)?.GetItem(srcslot);
+            Item item = manager.Character.Inventory.GetBag(srcbagslot).GetItem(srcslot);
             Container container = manager.Character.Inventory.GetBag(dstbagslot);
             if (item == null || container == null)
                 return;

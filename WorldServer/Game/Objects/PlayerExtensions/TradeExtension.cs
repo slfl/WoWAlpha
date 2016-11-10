@@ -84,8 +84,8 @@ namespace WorldServer.Game.Objects.PlayerExtensions.Trade
         public Player Trader { get; set; }
         public Player Player { get; set; }
         public TradeData TraderData { get { return Trader.TradeInfo; } }
-        public bool Accepted { get; private set; } = false;
-        public uint Money { get; private set; } = 0;
+        public bool Accepted { get; private set; }
+        public uint Money { get; private set; }
 
         private ulong[] items = new ulong[TRADE_SLOT_COUNT];
 

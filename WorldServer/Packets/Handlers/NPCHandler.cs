@@ -164,7 +164,7 @@ namespace WorldServer.Packets.Handlers
 
             Player c = manager.Character;
             Creature npc = Database.Creatures.TryGet(vendor);
-            if (npc == null || npc?.IsEnemyTo(manager.Character) == true)
+            if (npc == null || npc.IsEnemyTo(manager.Character) == true)
                 return;
 
             ItemTemplate itm = Database.ItemTemplates.TryGet(item); 
@@ -178,7 +178,7 @@ namespace WorldServer.Packets.Handlers
             }
 
             Container container = c.Inventory.GetBag(bag);
-            if (container == null || container?.IsFull == true)
+            if (container == null || container.IsFull == true)
             {
                 c.SendBuyError(BuyResults.BUY_ERR_CANT_CARRY_MORE, npc, item);
                 return;

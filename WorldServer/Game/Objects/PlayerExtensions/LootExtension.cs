@@ -161,7 +161,7 @@ namespace WorldServer.Game.Objects.PlayerExtensions.Loot
                 return;
 
             Creature mob = Database.Creatures.TryGet(p.CurrentLootTarget);
-            if (mob == null || mob?.Money <= 0)
+            if (mob == null || mob.Money <= 0)
                 return;
 
             uint money = mob.Money;
